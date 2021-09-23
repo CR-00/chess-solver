@@ -2,3 +2,47 @@
 body {
 	background: #121212;
 }
+
+.content-wrapper { 
+	display: flex;
+	margin: auto;
+	justify-content: center;
+}
+
+.solver-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	height: 100%;
+	width: 100%;
+	max-width: 500px;
+	max-height: 700px;
+}
+
+.board-wrapper {
+	width: 100%;
+	height: 100%;
+	margin: 10px 0px 0px 0px;
+}
+
+.positions-wrapper {
+	height: 200px;
+	max-width: 500px;
+	
+}
+
+.slider-wrapper {
+	overflow: hidden;
+	margin: 15px 15px 0px 0px;
+}
+
+.slider, .number-of-queens {
+	float: right;
+	clear: both;
+}
+
+.number-of-queens {
+	font-family: 'Roboto', sans-serif;
+	color: white;
+	opacity: 0.87;
+}

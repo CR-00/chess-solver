@@ -1,16 +1,13 @@
 import chess
 
 from django.shortcuts import render
-from django.http import HttpResponse, FileResponse
-from .models import ChessGame
 
 
 def index(request):
-
-	# Initialise a new game in the starting position then
-	# store the representation as a string in the DB.
-	board = chess.Board(fen=chess.STARTING_FEN)
-	game = ChessGame(board.epd())
-
-	context = {'game': game}
+	"""
+	Page will always load with a default board, this way if we want to make a full-fledged
+	engine rather than solving specific problems like n-queens problem, the game is already there.
+	"""
+	start_position = chess.STARTING_BOARD_FEN  # String representation of start position.
+	context = {'game_state': start_position}
 	return render(request, 'index.html', context)
