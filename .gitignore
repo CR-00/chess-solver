@@ -1,0 +1,5 @@
+/env/
+.env
+/chess_solver/static/js/node_modules/
+/chess_solver/static/js/package-lock.json
+/chess_solver/db.sqlite3
