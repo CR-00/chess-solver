@@ -25,24 +25,64 @@ body {
 	margin: 10px 0px 0px 0px;
 }
 
-.positions-wrapper {
+.hud-wrapper {
 	height: 200px;
 	max-width: 500px;
-	
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 10px 0px 0px 0px;	
 }
 
 .slider-wrapper {
 	overflow: hidden;
-	margin: 15px 15px 0px 0px;
+	text-align: center;
+	width: 100px;
+	margin: 10px 5px 0px 0px;
 }
 
 .slider, .number-of-queens {
 	float: right;
-	clear: both;
+	clear: right;
+}
+
+.reload-button {
+	width: 55px;
+	height: 30px;
+	margin: 0px 0px 0px 10px;
+	border-radius: 15px;
+	background: #AAAAAA;
+	float: left;
+	text-align: center;
+}
+
+.reload-button:hover {
+	cursor: pointer;
+	background: #6e6e6e;
+}
+
+.reload-button-text {
+	font-family: Lucida Sans Unicode;
+	font-size: 18px;
+	color: white;
+	opacity: 0.87;
+	user-select: none;
 }
 
 .number-of-queens {
 	font-family: 'Roboto', sans-serif;
 	color: white;
+	user-select: none;
 	opacity: 0.87;
+	margin: 10px 0px 0px 0px;
+}
+
+.time-taken {
+	opacity: 0.87;
+	display: inline-block;
+	margin: 7px 0px 0px 20px;
+	font-family: 'Roboto', sans-serif;
+	font-size: 24px;
+	color: white;
+	user-select: none;
 }

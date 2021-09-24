@@ -7,4 +7,5 @@ from . import views
 
 urlpatterns = [
 	path('', views.index, name='index'),
+	path('get/ajax/n_queens_problem/n=<int:id>', views.get_random_n_queens_problem, name='get_n_queens_problem')
 ]
