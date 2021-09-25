@@ -3,7 +3,7 @@ import chess
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .n_queens_problem_solver import generate_n_queens_problem
+from .n_queens_problem_solver import generate_random_n_queens_problem
 
 
 def index(request):
@@ -16,5 +16,5 @@ def index(request):
 def get_random_n_queens_problem(request, id):
 	if request.method == 'GET':
 		number_of_queens = id
-		board = generate_n_queens_problem(number_of_queens)
+		board = generate_random_n_queens_problem(number_of_queens)
 		return HttpResponse(board)

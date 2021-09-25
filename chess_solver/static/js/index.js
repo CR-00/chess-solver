@@ -56,8 +56,8 @@ function startTimer() {
   timeTaken = 0;
   if (!timerStarted) {
     interval = setInterval(incrementTimer, 1000); // Add 1 to timer every 1 sec.
+    timerStarted = true;
   }
-  timerStarted = true;
 }
 
 function incrementTimer() {
