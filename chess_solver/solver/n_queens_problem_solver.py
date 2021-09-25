@@ -50,7 +50,8 @@ def queen_is_attacking_other_queen(board: chess.Board, queen_square: chess.Squar
     is_attacking_other_queen = False
     other_queens = get_pieces_squares(board, WHITE_QUEEN)
     for other_queen in other_queens:
-        is_attacking_other_queen = (squares_on_same_rank(queen_square, other_queen) or
+        is_attacking_other_queen = (is_attacking_other_queen or
+                                    squares_on_same_rank(queen_square, other_queen) or
                                     squares_on_same_file(queen_square, other_queen) or
                                     squares_on_same_diagonal(queen_square, other_queen))
     return is_attacking_other_queen
