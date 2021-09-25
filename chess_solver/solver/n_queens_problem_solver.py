@@ -26,11 +26,11 @@ def get_pieces_squares(board: chess.Board, piece_type: chess.Piece) -> list:
     return squares
 
 
-def generate_random_n_queens_problem(n: int) -> str:
+def generate_random_n_queens_problem(n: int = 8) -> str:
     """
     https://en.wikipedia.org/wiki/Eight_queens_puzzle
     Sets up a new board with n queens in a random allocation using
-    selection without replacement.
+    selection without replacement, default is 8.
     """
     board = chess.Board().empty()
     empty_squares = get_empty_squares(board)
@@ -44,7 +44,7 @@ def generate_random_n_queens_problem(n: int) -> str:
 def queen_is_attacking_other_queen(board: chess.Board, queen_square: chess.Square) -> bool:
     """
     Since all queen's are the same colour, we can't just use the built
-    in function to check what a piece is attacking, so we check if here is
+    in function to check what a piece is attacking, so we check if there is
     another piece in the same file/rank/diagonal as a piece on a square.
     """
     is_attacking_other_queen = False
@@ -91,8 +91,8 @@ def squares_on_same_file(square_one: chess.Square, square_two: chess.Square) -> 
     """
     Check whether two squares are on the same file/column.
     """
-    file_one = chess.square_rank(square_one)
-    file_two = chess.square_rank(square_two)
+    file_one = chess.square_file(square_one)
+    file_two = chess.square_file(square_two)
     return (file_one - file_two) == 0
 
 
@@ -106,5 +106,6 @@ def squares_on_same_diagonal(square_one: chess.Square, square_two: chess.Square)
 
 
 if __name__ == '__main__':
-    board = chess.Board(generate_random_n_queens_problem(8))
+    board = chess.Board(generate_random_n_queens_problem())
+    print(board)
     print(is_solution(board))
