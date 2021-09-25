@@ -47,14 +47,13 @@ def queen_is_attacking_other_queen(board: chess.Board, queen_square: chess.Squar
     in function to check what a piece is attacking, so we check if there is
     another piece in the same file/rank/diagonal as a piece on a square.
     """
-    is_attacking_other_queen = False
     other_queens = get_pieces_squares(board, WHITE_QUEEN)
     for other_queen in other_queens:
-        is_attacking_other_queen = (is_attacking_other_queen or
-                                    squares_on_same_rank(queen_square, other_queen) or
-                                    squares_on_same_file(queen_square, other_queen) or
-                                    squares_on_same_diagonal(queen_square, other_queen))
-    return is_attacking_other_queen
+        if (squares_on_same_rank(queen_square, other_queen) or
+                squares_on_same_file(queen_square, other_queen) or
+                squares_on_same_diagonal(queen_square, other_queen)):
+            return True
+    return False
 
 
 def is_solution(board: chess.Board) -> bool:
