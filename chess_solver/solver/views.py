@@ -1,4 +1,5 @@
 import chess
+import base64
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -32,5 +33,8 @@ def get_brute_force_solution(request, id):
 
 def check_n_queens_solution(request, id):
 	if request.method == 'GET':
-		solved = is_solution(id)  # id is EPD string of board.
+		fen = id + '='  # '=' is removed client-side.
+		provided_solution = base64.standard_b64decode(fen).decode('utf-8')
+		board = chess.Board(fen=provided_solution)
+		solved = is_solution(board)
 		return HttpResponse(solved)

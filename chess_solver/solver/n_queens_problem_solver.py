@@ -191,6 +191,4 @@ def solved_board() -> str:
 
 
 if __name__ == '__main__':
-    solution = solve_by_brute_force(n=8)
-    board = chess.Board(solution)
-    print(board)
+    print(solve_by_brute_force(n=8))

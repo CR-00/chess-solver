@@ -71,6 +71,25 @@ function mintutesAndSecondsFormat(s){
   return(s-(s%=60))/60+(9<s?':':':0')+s
 }
 
+// Check solution on submit
+
+var submitButton = document.querySelector('.submit-button');
+submitButton.addEventListener('click', function() {
+  checkSolution();
+});
+
+function checkSolution() {
+  var fen = board.fen();
+  fen = Base64.encode(fen);
+  fen = fen.replace('=', '') // B64 Always has trailing '=' we don't want in URL.
+  $.ajax({
+    url: 'get/ajax/check_solution/fen=' + fen,
+    type: 'GET',
+    success: function(response) {
+      console.log(response);
+    },
+  });
+}
 
 // Solution algorithms:
 
@@ -83,3 +102,4 @@ function solveByBruteForce() {
     },
   });
 }
+
