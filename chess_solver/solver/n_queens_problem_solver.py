@@ -1,7 +1,39 @@
 import chess
 import random
+import itertools
 
 WHITE_QUEEN = chess.Piece(piece_type=chess.QUEEN, color=True)
+SAMPLE_SOLUTION = r'3Q4/1Q6/6Q1/2Q5/5Q2/7Q/4Q3/Q7 w - -'  # Useful for debugging.
+
+
+# Solution Algorithms:
+
+def solve_by_brute_force(n: int = None) -> str:
+    """
+    Returns a sequence of moves that leads to a solution by using a
+    brute force search - the slowest approach. Generates all permutations,
+    then one rank (i) is given to each queen, since no two queens can be on the
+    same rank and/or file. Then the file of each queen is determined by permutation[i].
+    """
+    if n > 8:  # Max supported board size in client is 8x8.
+        raise ValueError(f"No solution exists for %s queens on an 8x8 board." % (n))
+
+    permutations = list(itertools.permutations(range(0, n)))
+    for permutation in permutations:
+        board = chess.Board().empty()
+        queen_squares = []
+        for i in range(n):
+            square = 8 * i + permutation[i]  # 8 * rank + file = Square Number
+            queen_squares.append(square)
+        for i in queen_squares:
+            board.set_piece_at(i, WHITE_QUEEN)
+        if is_solution(board):
+            return board.epd()
+
+    raise ValueError("No solution was found.")
+
+
+# Utility functions:
 
 
 def get_empty_squares(board: chess.Board) -> list:
@@ -41,18 +73,20 @@ def generate_random_n_queens_problem(n: int = 8) -> str:
     return board.epd()
 
 
-def queen_is_attacking_other_queen(board: chess.Board, queen_square: chess.Square) -> bool:
+def queen_is_attacking_other_queen(board: chess.Board, queen: chess.Square) -> bool:
     """
     Since all queen's are the same colour, we can't just use the built
     in function to check what a piece is attacking, so we check if there is
     another piece in the same file/rank/diagonal as a piece on a square.
     """
     other_queens = get_pieces_squares(board, WHITE_QUEEN)
-    for other_queen in other_queens:
-        if (squares_on_same_rank(queen_square, other_queen) or
-                squares_on_same_file(queen_square, other_queen) or
-                squares_on_same_diagonal(queen_square, other_queen)):
-            return True
+    for q in other_queens:
+        if q != queen:  # Not referring to the same piece.
+            if (squares_on_same_rank(q, queen) or
+                    squares_on_same_file(q, queen) or
+                    squares_on_same_diagonal(q, queen) or
+                    squares_on_same_anti_diagonal(q, queen)):
+                return True
     return False
 
 
@@ -98,14 +132,65 @@ def squares_on_same_file(square_one: chess.Square, square_two: chess.Square) -> 
 
 def squares_on_same_diagonal(square_one: chess.Square, square_two: chess.Square) -> bool:
     """
-    Check whether two squares are on the same diagonal.
+    Check whether two squares are on the same (left-right) diagonal.
     """
-    diagonal_one = get_square_diagonal(square_one)
-    diagonal_two = get_square_diagonal(square_two)
-    return (diagonal_one - diagonal_two) == 0
+    if square_diagonal(square_one) == square_diagonal(square_two):
+        return True
+    return False
+
+
+def squares_on_same_anti_diagonal(square_one: chess.Square, square_two: chess.Square) -> bool:
+    """
+    Checks whether two squares are on the same (right-left) diagonal / anti_diagonal.
+    """
+    if square_anti_diagonal(square_one) == square_anti_diagonal(square_two):
+        return True
+    return False
+
+
+def convert_square_number_to_x_y_coordinates(square: chess.Square) -> list:
+    """
+    Converts an integer value for a square on the board to an (x, y) coordinate
+    of the form [rank, file].
+    """
+    rank = square >> 3  # Divide by 8
+    file = square & 7  # Mod 8
+    return [rank, file]
+
+
+def square_diagonal(square: chess.Square) -> int:
+    """
+    Returns the diagonal (left-to-right) index of an integer representation of a
+    square on the board.
+    """
+    rank = square >> 3  # Divide by 8
+    file = square & 7  # Mod 8
+    return (rank - file) & 15  # 16 diagonals on an 8x8 board.
+
+
+def square_anti_diagonal(square: chess.Square) -> int:
+    """
+    Returns the anti-diagonal (right-to-left) index of an integer representation of a
+    square on the board.
+    """
+    rank = square >> 3  # Divide by 8
+    file = square & 7  # Mod 8
+    return (rank + file) ^ 7
+
+
+def solved_board() -> str:
+    """
+    Useful for testing in development, returns an EPD string of a board that is
+    a known solution of the 8-queens problem.
+    """
+    board = chess.Board().empty()
+    queens = [0, 12, 23, 29, 34, 46, 49, 59]
+    for i in queens:
+        board.set_piece_at(i, WHITE_QUEEN)
+    return board.epd()
 
 
 if __name__ == '__main__':
-    board = chess.Board(generate_random_n_queens_problem())
+    solution = solve_by_brute_force(n=9)
+    board = chess.Board(solution)
     print(board)
-    print(is_solution(board))
