@@ -5,6 +5,7 @@ var gameState = document.querySelector('#game-state');
 var config = {
   pieceTheme: 'static/images/chesspieces/wikipedia/{piece}.png',
   position: gameState.value,
+  moveSpeed: 'slow',
   draggable: true,
   dropOffBoard: 'snapback', 
 }
@@ -70,3 +71,15 @@ function mintutesAndSecondsFormat(s){
   return(s-(s%=60))/60+(9<s?':':':0')+s
 }
 
+
+// Solution algorithms:
+
+function solveByBruteForce() {
+    $.ajax({
+    url: 'get/ajax/n_queens_brute_force_solution/n=' + slider.value,
+    type: 'GET',
+    success: function(response) {
+      board.position(response);
+    },
+  });
+}

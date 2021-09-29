@@ -8,12 +8,12 @@ SAMPLE_SOLUTION = r'3Q4/1Q6/6Q1/2Q5/5Q2/7Q/4Q3/Q7 w - -'  # Useful for debugging
 
 # Solution Algorithms:
 
-def solve_by_brute_force(n: int = None) -> str:
+def solve_by_brute_force(n: int = 8) -> str:
     """
-    Returns a sequence of moves that leads to a solution by using a
-    brute force search - the slowest approach. Generates all permutations,
-    then one rank (i) is given to each queen, since no two queens can be on the
-    same rank and/or file. Then the file of each queen is determined by permutation[i].
+    Returns a solution to the n-queens-problem via brute force.
+    Generates all permutations, then one rank (i) is given to each queen,
+    since no two queens can be on the same rank and/or file.
+    Then the file of each queen is determined by permutation[i].
     """
     if n > 8:  # Max supported board size in client is 8x8.
         raise ValueError(f"No solution exists for %s queens on an 8x8 board." % (n))
@@ -191,6 +191,6 @@ def solved_board() -> str:
 
 
 if __name__ == '__main__':
-    solution = solve_by_brute_force(n=9)
+    solution = solve_by_brute_force(n=8)
     board = chess.Board(solution)
     print(board)
